@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:instagram_clone/utils/colors.dart';
+import 'package:instagram_clone/widgets/elevated_button.dart';
 import 'package:instagram_clone/widgets/text_field_input.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -66,18 +67,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 24,
               ),
               // Log In Button
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 12,
-                    ),
-                    backgroundColor: blueColor,
-                  ),
-                  child: const Text('Log in'),
-                ),
+              ReusableElevatedButton(
+                text: 'Log In',
+                onPressed: () {},
               ),
               const SizedBox(
                 height: 24,
