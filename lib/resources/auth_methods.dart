@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:instagram_clone/models/user.dart' as model;
 import 'package:instagram_clone/resources/storage_methods.dart';
+import 'package:instagram_clone/utils/utils.dart';
 
 class AuthMethods {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -54,33 +55,32 @@ class AuthMethods {
 
       return null;
     } on FirebaseException catch (error) {
-      return error.toString().split(']')[1];
+      return parseFirebaseError(error.toString());
     } catch (err) {
       return err.toString();
     }
   }
 
-  // logging in user
-  Future<String> loginUser({
+  // Logging in user
+  Future<String?> loginUser({
     required String email,
     required String password,
   }) async {
-    String res = "Some error Occurred";
     try {
-      if (email.isNotEmpty || password.isNotEmpty) {
-        // logging in user with email and password
-        await _auth.signInWithEmailAndPassword(
-          email: email,
-          password: password,
-        );
-        res = "success";
-      } else {
-        res = "Please enter all the fields";
-      }
+      // logging in user with email and password
+      await _auth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      print(_auth.currentUser);
+    } on FirebaseException catch (error) {
+      return parseFirebaseError(error.toString());
     } catch (err) {
       return err.toString();
     }
-    return res;
+
+    return null;
   }
 
   Future<void> signOut() async {

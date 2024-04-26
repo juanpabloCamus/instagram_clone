@@ -5,7 +5,7 @@ class TextFieldInput extends StatelessWidget {
   final bool isPassword;
   final String hintText;
   final TextInputType textInputType;
-  final String? Function(String?)? validator;
+  final String? Function(String? value)? validator;
 
   const TextFieldInput({
     Key? key,

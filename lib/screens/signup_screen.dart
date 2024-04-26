@@ -37,11 +37,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   void selectImage() async {
-    Uint8List selectedImage = await pickImage(ImageSource.gallery);
+    Uint8List? selectedImage = await pickImage(ImageSource.gallery);
 
-    setState(() {
-      _image = selectedImage;
-    });
+    if (selectedImage != null) {
+      setState(() {
+        _image = selectedImage;
+      });
+    }
   }
 
   void onSignUp() async {
@@ -49,6 +51,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
     if (_image == null) {
       showSnackBar(context, 'You must upload a profile picture');
+      return;
     }
 
     setState(() {
