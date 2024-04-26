@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-/// To pick up image from gallery
+///To pick up image from gallery
 Future<Uint8List?> pickImage(ImageSource source) async {
   final ImagePicker imagePicker = ImagePicker();
   XFile? file = await imagePicker.pickImage(source: source);
@@ -14,7 +14,7 @@ Future<Uint8List?> pickImage(ImageSource source) async {
   return null;
 }
 
-/// For display snackbars
+///For display snackbars
 ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showSnackBar(
     BuildContext context, String text) {
   return ScaffoldMessenger.of(context).showSnackBar(
@@ -26,5 +26,12 @@ ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showSnackBar(
   );
 }
 
-/// Return parsed firebase error
+///Return parsed firebase error
 String parseFirebaseError(String error) => error.toString().split(']')[1];
+
+///Navigate to screen
+void naviagateToScreen(BuildContext context, Widget screen) {
+  Navigator.of(context).pushReplacement(MaterialPageRoute(
+    builder: (context) => screen,
+  ));
+}

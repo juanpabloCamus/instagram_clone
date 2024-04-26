@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:instagram_clone/resources/auth_methods.dart';
+import 'package:instagram_clone/screens/home_screen.dart';
+import 'package:instagram_clone/screens/signup_screen.dart';
 import 'package:instagram_clone/utils/colors.dart';
+import 'package:instagram_clone/utils/constants.dart';
+import 'package:instagram_clone/utils/utils.dart';
 import 'package:instagram_clone/utils/validators.dart';
 import 'package:instagram_clone/widgets/elevated_button.dart';
 import 'package:instagram_clone/widgets/text_field_input.dart';
@@ -33,13 +37,21 @@ class _LoginScreenState extends State<LoginScreen> {
       _isLoading = true;
     });
 
-    await AuthMethods().loginUser(
+    final String? response = await AuthMethods().loginUser(
         email: _emailController.text, password: _passwordController.text);
+
+    if (response is String) {
+      // ignore: use_build_context_synchronously
+      showSnackBar(context, response);
+      return;
+    }
 
     setState(() {
       _isLoading = false;
     });
   }
+
+  void navigateToSignUp() => naviagateToScreen(context, const SignUpScreen());
 
   @override
   Widget build(BuildContext context) {
@@ -109,6 +121,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     GestureDetector(
+                      onTap: () => navigateToSignUp(),
                       child: Container(
                         padding: const EdgeInsets.symmetric(vertical: 8),
                         child: const Text(

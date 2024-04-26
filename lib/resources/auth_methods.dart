@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:instagram_clone/models/user.dart' as model;
 import 'package:instagram_clone/resources/storage_methods.dart';
+import 'package:instagram_clone/utils/constants.dart';
 import 'package:instagram_clone/utils/utils.dart';
 
 class AuthMethods {
@@ -19,7 +20,7 @@ class AuthMethods {
   //   return model.User.fromSnap(documentSnapshot);
   // }
 
-  /// Sign Up User
+  ///Sign Up User
   Future<String?> signUpUser({
     required String email,
     required String password,
@@ -61,7 +62,7 @@ class AuthMethods {
     }
   }
 
-  // Logging in user
+  ///Logging in user. The response will be null
   Future<String?> loginUser({
     required String email,
     required String password,
@@ -72,8 +73,6 @@ class AuthMethods {
         email: email,
         password: password,
       );
-
-      print(_auth.currentUser);
     } on FirebaseException catch (error) {
       return parseFirebaseError(error.toString());
     } catch (err) {
