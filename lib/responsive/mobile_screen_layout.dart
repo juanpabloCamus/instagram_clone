@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // import 'package:instagram_clone_flutter/utils/colors.dart';
 // import 'package:instagram_clone_flutter/utils/global_variable.dart';
@@ -39,7 +38,13 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
 
   @override
   Widget build(BuildContext context) {
-    return Text('Mobile');
+    return const Scaffold(
+      body: Center(
+        child: Text(
+          'Mobile',
+        ),
+      ),
+    );
     // Scaffold(
     //   body: PageView(
     //     controller: pageController,
