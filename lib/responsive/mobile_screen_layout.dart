@@ -1,6 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-// import 'package:instagram_clone_flutter/utils/colors.dart';
-// import 'package:instagram_clone_flutter/utils/global_variable.dart';
+import 'package:instagram_clone/utils/colors.dart';
 
 class MobileScreenLayout extends StatefulWidget {
   const MobileScreenLayout({Key? key}) : super(key: key);
@@ -38,64 +38,47 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text(
-          'Mobile',
-        ),
+    return Scaffold(
+      body: PageView(
+        physics: const NeverScrollableScrollPhysics(),
+        controller: pageController,
+        onPageChanged: (int value) => onPageChanged(value),
+        children: [
+          Text('feed'),
+          Text('search'),
+          Text('add'),
+          Text('fav'),
+          Text('prof'),
+        ],
+      ),
+      bottomNavigationBar: CupertinoTabBar(
+        backgroundColor: mobileBackgroundColor,
+        activeColor: primaryColor,
+        onTap: (int value) => navigationTapped(value),
+        currentIndex: _page,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            backgroundColor: primaryColor,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            backgroundColor: primaryColor,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.add_circle),
+            backgroundColor: primaryColor,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.favorite),
+            backgroundColor: primaryColor,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            backgroundColor: primaryColor,
+          ),
+        ],
       ),
     );
-    // Scaffold(
-    //   body: PageView(
-    //     controller: pageController,
-    //     onPageChanged: onPageChanged,
-    //     children: homeScreenItems,
-    //   ),
-    //   bottomNavigationBar: CupertinoTabBar(
-    //     backgroundColor: mobileBackgroundColor,
-    //     items: <BottomNavigationBarItem>[
-    //       BottomNavigationBarItem(
-    //         icon: Icon(
-    //           Icons.home,
-    //           color: (_page == 0) ? primaryColor : secondaryColor,
-    //         ),
-    //         label: '',
-    //         backgroundColor: primaryColor,
-    //       ),
-    //       BottomNavigationBarItem(
-    //           icon: Icon(
-    //             Icons.search,
-    //             color: (_page == 1) ? primaryColor : secondaryColor,
-    //           ),
-    //           label: '',
-    //           backgroundColor: primaryColor),
-    //       BottomNavigationBarItem(
-    //           icon: Icon(
-    //             Icons.add_circle,
-    //             color: (_page == 2) ? primaryColor : secondaryColor,
-    //           ),
-    //           label: '',
-    //           backgroundColor: primaryColor),
-    //       BottomNavigationBarItem(
-    //         icon: Icon(
-    //           Icons.favorite,
-    //           color: (_page == 3) ? primaryColor : secondaryColor,
-    //         ),
-    //         label: '',
-    //         backgroundColor: primaryColor,
-    //       ),
-    //       BottomNavigationBarItem(
-    //         icon: Icon(
-    //           Icons.person,
-    //           color: (_page == 4) ? primaryColor : secondaryColor,
-    //         ),
-    //         label: '',
-    //         backgroundColor: primaryColor,
-    //       ),
-    //     ],
-    //     onTap: navigationTapped,
-    //     currentIndex: _page,
-    //   ),
-    // );
   }
 }
