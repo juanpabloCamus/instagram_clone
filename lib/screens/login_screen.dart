@@ -4,7 +4,6 @@ import 'package:instagram_clone/resources/auth_methods.dart';
 import 'package:instagram_clone/screens/home_screen.dart';
 import 'package:instagram_clone/screens/signup_screen.dart';
 import 'package:instagram_clone/utils/colors.dart';
-import 'package:instagram_clone/utils/constants.dart';
 import 'package:instagram_clone/utils/utils.dart';
 import 'package:instagram_clone/utils/validators.dart';
 import 'package:instagram_clone/widgets/elevated_button.dart';
