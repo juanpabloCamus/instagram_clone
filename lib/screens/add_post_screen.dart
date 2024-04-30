@@ -1,8 +1,11 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:instagram_clone/models/user.dart';
+import 'package:instagram_clone/resources/firestore_methods.dart';
 import 'package:instagram_clone/utils/colors.dart';
 import 'package:instagram_clone/utils/utils.dart';
 import 'package:provider/provider.dart';
@@ -18,6 +21,7 @@ class AddPostScreen extends StatefulWidget {
 
 class _AddPostScreenState extends State<AddPostScreen> {
   Uint8List? _file;
+  bool _isLoading = false;
   final TextEditingController _descriptionController = TextEditingController();
 
   _selectImage(BuildContext context) async {
@@ -48,11 +52,53 @@ class _AddPostScreenState extends State<AddPostScreen> {
                   _file = file;
                 });
               },
+            ),
+            SimpleDialogOption(
+              padding: const EdgeInsets.all(20),
+              child: const Text('Cancel'),
+              onPressed: () async {
+                Navigator.of(context).pop();
+              },
             )
           ],
         );
       },
     );
+  }
+
+  void _postImage(String id, String username, String profilePic) async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    final String? res = await FirestoreMethods().uploadPost(
+      _descriptionController.text,
+      _file!,
+      id,
+      username,
+      profilePic,
+    );
+
+    if (res != null) {
+      showSnackBar(context, res);
+      setState(() {
+        _isLoading = false;
+      });
+      return;
+    } else {
+      showSnackBar(context, 'Posted!');
+    }
+
+    setState(() {
+      _isLoading = false;
+      _file = null;
+    });
+  }
+
+  @override
+  void dispose() {
+    _descriptionController.dispose();
+    super.dispose();
   }
 
   @override
@@ -77,7 +123,11 @@ class _AddPostScreenState extends State<AddPostScreen> {
               centerTitle: false,
               actions: <Widget>[
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () => _postImage(
+                    user.uid,
+                    user.username,
+                    user.photoUrl,
+                  ),
                   child: const Text(
                     'Post',
                     style: TextStyle(
@@ -91,6 +141,11 @@ class _AddPostScreenState extends State<AddPostScreen> {
             ),
             body: Column(
               children: <Widget>[
+                if (!_isLoading)
+                  const Padding(
+                    padding: EdgeInsets.only(bottom: 12),
+                    child: LinearProgressIndicator(),
+                  ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.start,
