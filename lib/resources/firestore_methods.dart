@@ -41,4 +41,6 @@ class FirestoreMethods {
 
     return null;
   }
+
+  likePost() {}
 }
