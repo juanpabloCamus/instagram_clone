@@ -131,7 +131,16 @@ class _PostCardState extends State<PostCard> {
           ),
           // IMAGE SECTION OF THE POST
           GestureDetector(
-            onDoubleTap: () {},
+            onDoubleTap: () {
+              FirestoreMethods().likePost(
+                widget.snap['postId'].toString(),
+                user.uid,
+                widget.snap['likes'],
+              );
+              setState(() {
+                isLikeAnimating = true;
+              });
+            },
             child: Stack(
               alignment: Alignment.center,
               children: [
@@ -182,25 +191,25 @@ class _PostCardState extends State<PostCard> {
                           Icons.favorite_border,
                         ),
                   onPressed: () => FirestoreMethods().likePost(
-                      // widget.snap['postId'].toString(),
-                      // user.uid,
-                      // widget.snap['likes'],
-                      ),
+                    widget.snap['postId'].toString(),
+                    user.uid,
+                    widget.snap['likes'],
+                  ),
                 ),
               ),
               IconButton(
-                  icon: const Icon(
-                    Icons.comment_outlined,
-                  ),
-                  onPressed: () {}
-                  // Navigator.of(context).push(
-                  //   MaterialPageRoute(
-                  //     builder: (BuildContext context) => CommentsScreen(
-                  //       postId: widget.snap['postId'].toString(),
-                  //     ),
-                  //   ),
-                  // ),
-                  ),
+                icon: const Icon(
+                  Icons.comment_outlined,
+                ),
+                onPressed: () {},
+                // Navigator.of(context).push(
+                //   MaterialPageRoute(
+                //     builder: (BuildContext context) => CommentsScreen(
+                //       postId: widget.snap['postId'].toString(),
+                //     ),
+                //   ),
+                // ),
+              ),
               IconButton(
                 icon: const Icon(
                   Icons.send,
