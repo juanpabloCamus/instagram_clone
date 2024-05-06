@@ -30,8 +30,6 @@ class _PostCardState extends State<PostCard> {
 
   fetchCommentLen() async {}
 
-  deletePost(String postId) async {}
-
   @override
   Widget build(BuildContext context) {
     final User user = Provider.of<UserProvider>(context).getUser;
@@ -110,7 +108,7 @@ class _PostCardState extends State<PostCard> {
                                             child: Text(e),
                                           ),
                                           onTap: () {
-                                            deletePost(
+                                            FirestoreMethods().deletePost(
                                               widget.snap['postId'].toString(),
                                             );
                                             // remove the dialog box
